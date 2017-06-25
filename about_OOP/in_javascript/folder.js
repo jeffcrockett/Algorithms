@@ -10,4 +10,4 @@ this.makes_a_folder = function(name){
 }
 var jeff = new CodeMonkey('jeff');
 console.log(jeff.makes_a_folder('Sentence'));
-
+console.log(jeff.s_name);
