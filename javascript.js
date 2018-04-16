@@ -26,15 +26,14 @@ Array.prototype.popFront = function(){
   console.log(this);
   for (var i=0; i < this.length - 1; i++){
     this[i] = this[i+1];
-    console.log(this);
+    // console.log(this);
   }
   // [1, 2, 3, 4] -> [2, 3, 4, 4]
-  this.pop();
   // [2, 3, 4]
-  this[this.length] = temp;
+  this[this.length - 1] = temp;
+  this.pop();
   // [2, 3, 4, 1];
-  last = this.pop();
-  return last;
+  return this;
 }
 
 Array.prototype.removeAt(index){
@@ -58,5 +57,37 @@ Array.prototype.swapPairs(){
 
 
 
+  return this;
+}
+
+Array.prototype.removeDuplicates(){
+  for(var i=0; i < this.length - 1; i ++){
+    if (this[i+1] < this[i]){
+      return 'Array must be sorted.'
+    }
+  }
+  for(var i=0; i < this.length - 1; i ++){
+    if (this[i+1] == this[i]){
+      this.removeAt(i);
+    }
+  }
+  return this;
+}
+
+Array.prototype.minToFront = function(){
+  var min = this[0];
+  for (var i=0; i < this.length - 1; i++){
+    if (this[i] > this[i+1]){
+      min = this[i+1];
+    }
+  }
+  console.log('min is', min);
+  for (var i=this.length; i > 0; i--){
+    this[i] = this[i-1];
+  }
+  this[0] = min;
+  console.log(this);
+  this.pop();
+  console.log(this);
   return this;
 }
