@@ -60,6 +60,26 @@ Array.prototype.swapPairs(){
   return this;
 }
 
+Array.prototype.min = function(){
+  var min = this[0];
+  for(var i=1; i < this.length; i++){
+    if(this[i] < min){
+      min = this[i]
+    }
+  }
+  return min;
+}
+
+Array.prototype.max = function(){
+  var max = this[0];
+  for(var i=1; i < this.length; i++){
+    if(this[i] > max){
+      max = this[i]
+    }
+  }
+  return max;
+}
+
 Array.prototype.removeDuplicates(){
   for(var i=0; i < this.length - 1; i ++){
     if (this[i+1] < this[i]){
@@ -150,6 +170,138 @@ Array.prototype.onlyBetween = function(min, max){
     if(0 < i < this.length - 1 && this[i] < min || this[i] > max){
       this.removeAt(i);
     }
+  }
+  return this;
+}
+
+function concat(arr1, arr2){
+  var newArray = [];
+  for(var i=0; i<arr1.length; i++){
+    newArray.push(arr1[i]);
+  }
+  for(var i=0; i<arr2.length; i++){
+    newArray.push(arr2[i]);
+  }
+  return newArray;
+}
+
+Array.prototype.indexOf = function(value){
+  for(var i=0; i<this.length; i++){
+    if(this[i] == value){
+      return i;
+    }
+  }
+  return -1;
+}
+function skylineHeights(arr){
+  var max = arr.max();
+  for(var i = 0; i < arr.length; i++){
+    if(arr[i] < 0 || i > 0 && arr.indexOf(max) < i && max >= arr[i]){
+      arr.removeAt(i);
+    }
+
+  }
+  return arr;
+}
+
+Array.prototype.removeNegatives = function(){
+  for(var i=0; i<this.length; i++){
+    console.log(this.length);
+    if(this[i] < 0){
+      this.removeAt(i);
+      console.log(this);
+      i--;
+    }
+  }
+  return this;
+}
+
+Array.prototype.secondToLast = function(){
+  if(this.length < 2){
+    return null;
+  }
+  for(var i = 0; i < this.length; i++){
+    if(i == this.length -2){
+      return this[i];
+    }
+  }
+}
+
+Array.prototype.nthToLast = function(n){
+  if(this.length < n){
+    return null;
+  }
+  for(var i = 0; i < this.length; i++){
+    if(i == this.length - n){
+      return this[i];
+    }
+  }
+}
+
+Array.prototype.secondLargest = function(){
+  if(this.length < 2){
+    return null;
+  }
+  var max = this.max();
+  this.removeAt(this.indexOf(max));
+  return this.max();
+}
+
+Array.prototype.isValidCreditCard = function(){
+  var count = 0, sum = 0;
+  if(this.length < 13 || this.length > 19){
+    return 'Error: Card must be between 13 and 19 digits';
+  }
+  var copy = [];
+  for(var i = 0; i < this.length; i++){
+    copy.push(this[i]);
+  }
+  for(var i = copy.length - 1; i <= 0; i--){
+    if(count % 2 == 0){
+      copy[i] = copy[i] * 2;
+    }
+    if(copy[i] > 9){
+      copy[i] = copy[i] - 9;
+    }
+    count++;
+  }
+  for(var i = 0; i < copy.length; i++){
+    sum += copy[i];
+  }
+
+  sum += this[this.length - 1];
+  if(sum % 10 == 0){
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+Array.prototype.contains = function(value){
+  for(var i = 0; i < this.length; i++){
+    if(this[i] == value){
+      return true;
+    }
+  }
+  return false;
+}
+
+Array.prototype.shuffled = function(){
+  var swappedIndices = [], randomIndex, temp;
+  for(var i = 0; i<this.length; i++) {
+    randomIndex = Math.floor(Math.random() * this.length);
+    if (swappedIndices.contains(randomIndex)){
+      i--;
+      continue;
+    }
+    else {
+      swappedIndices.push(randomIndex);
+      temp = this[i];
+      this[i] = this[randomIndex];
+      this[randomIndex] = temp;
+    }
+
   }
   return this;
 }
