@@ -36,7 +36,7 @@ Array.prototype.popFront = function(){
   return this;
 }
 
-Array.prototype.removeAt(index){
+Array.prototype.removeAt = function(index){
   var temp = this[index];
   for (var i=index; i < this.length - 1; i++){
     this[i] = this[i+1];
@@ -89,5 +89,67 @@ Array.prototype.minToFront = function(){
   console.log(this);
   this.pop();
   console.log(this);
+  return this;
+}
+
+Array.prototype.reversed = function(){
+  var mid = Math.floor(this.length / 2) ? this.length % 2 == 1 : this.length / 2 - 1;
+  var start = 0;
+  var end = this.length - 1;
+  var temp;
+  console.log('mid is ', mid);
+  while(start < end){
+    temp = this[start];
+    this[start] = this[end];
+    this[end] = temp;
+    start++;
+    end--;
+  }
+  return this;
+}
+
+Array.prototype.rotatedRightBy = function(shiftBy){
+  var originalLength = this.length;
+  for(var i = this.length-1; i >=0; i--){
+    this[i+shiftBy] = this[i];
+  }
+  for(var i = 0; i < this.length; i++){
+    if(i >= originalLength){
+      this[i - originalLength] = this[i];
+    }
+  }
+  this.length = originalLength;
+  return this;
+
+}
+
+Array.prototype.rotatedLeftBy = function(shiftBy){
+  var originalLength = this.length;
+  this.reversed();
+  for(var i = this.length-1; i >=0; i--){
+    this[i+shiftBy] = this[i];
+  }
+  for(var i = 0; i < this.length; i++){
+    if(i >= originalLength){
+      this[i - originalLength] = this[i];
+    }
+  }
+  this.length = originalLength;
+  this.reversed()
+  return this;
+}
+
+Array.prototype.onlyBetween = function(min, max){
+  for(var i = 0; i < this.length; i++){
+    if(i == 0 && this[i] < min || this[i] > max){
+      this.popFront();
+    }
+    if(i == this.length - 1 && this[i] < min || this[i] > max){
+      this.pop();
+    }
+    if(0 < i < this.length - 1 && this[i] < min || this[i] > max){
+      this.removeAt(i);
+    }
+  }
   return this;
 }
