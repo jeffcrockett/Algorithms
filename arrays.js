@@ -369,3 +369,23 @@ var zipIt2 = function(arr1, arr2){
     }
   return arr1;
   }
+
+Array.prototype.removeShorterStrings = function(stringLength){
+  for (var i = 0; i < this.length; i++){
+    if (this[i].length <= stringLength){
+      this.removeAt(i);
+    }
+  }
+  return this;
+
+}
+
+Array.prototype.removeEvenLengthStrings = function(){
+  for(var i = 0; i < this.length; i++){
+    if (this[i].length % 2 == 0){
+      this.removeAt(i);
+      i--;
+    }
+  }
+  return this;
+}
