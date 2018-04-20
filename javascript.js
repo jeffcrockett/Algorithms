@@ -10,15 +10,11 @@ Array.prototype.pushFront = function(val){
 
 //inserts value into array at given index
 Array.prototype.insertAt = function(index, val){
-  var it = [];
-  for (var i = 0; i < index; i ++){
-    it.push(this[i]);
+  for(var i = this.length; i > index; i--){
+    this[i] = this[i-1];
   }
-  it.push(val);
-  for (var i = index; i < this.length; i ++){
-    it.push(this[i]);
-  }
-  return it;
+  this[index] = val;
+  return this;
 }
 
 Array.prototype.popFront = function(){
@@ -305,3 +301,71 @@ Array.prototype.shuffled = function(){
   }
   return this;
 }
+
+Array.prototype.removeRange = function(start, end){
+  while (end >= start){
+    this.removeAt(end);
+    end--;
+  }
+  return this;
+}
+
+Array.prototype.intermediateSums = function(){
+
+  var sumOf = 0, count = 0, length = this.length,
+    multiplier = 0;
+  while(length > 0){
+    while(count <= 10 * multiplier && this.length >= 10){
+      sumOf += this[count];
+      count++;
+
+      }
+
+    sumOf = 0;
+    count += 10;
+    length--;
+    multiplier++;
+    this.insertAt(count, sumOf)
+  }
+  return this;
+}
+
+// combine values of two arrays sequentially into a new array
+var zipIt = function(arr1, arr2){
+  var newArray = [];
+  if (arr1.length <= arr2.length){
+    for (var i = 0; i < arr1.length; i++){
+      newArray.push(arr1[i]);
+      newArray.push(arr2[i]);
+
+    }
+    for (var i = arr1.length; i < arr2.length; i++){
+      newArray.push(arr2[i]);
+    }
+  }
+  else {
+    for (var i = 0; i < arr2.length; i++){
+      newArray.push(arr1[i]);
+      newArray.push(arr2[i]);
+    }
+    for (var i = arr2.length; i < arr1.length; i++){
+      newArray.push(arr1[i]);
+    }
+
+  }
+  return newArray;
+}
+
+// combine the two arrays' values into the first array
+
+var zipIt2 = function(arr1, arr2){
+  var i = 1, j = 0, arr1Length = arr1.length;
+    while (j < arr2.length){
+      arr1.insertAt(i, arr2[j]);
+      console.log('arr 1 is ', arr1);
+      j++;
+      j < arr1Length ? i += 2 : i++;
+      console.log('i is ', i, 'j is ', j, 'arr1Length is ', arr1Length);
+    }
+  return arr1;
+  }
